@@ -10,28 +10,33 @@ if(JSON.parse(localStorage.getItem('bookList'))!=null){
     display();
 
 }
-
 function addBookmark(){
 
-    if(bookNameValid() && bookURLValid()){
-    var bookmark={
-        bookName:BookmarkNameInput.value,
-        siteURL:siteURLInput.value
-    }
 
-    bookList.push(bookmark);
+    if(noRepeat() && bookNameValid() && bookURLValid()){
 
-    localStorage.setItem('bookList',JSON.stringify(bookList))
-    clearData();
-
-    display();
-
-    BookmarkNameInput.classList.remove("is-valid");
-    siteURLInput.classList.remove("is-valid");
-
+            var bookmark={
+                bookName:BookmarkNameInput.value,
+                siteURL:siteURLInput.value
+            }
+        
+            bookList.push(bookmark);
+        
+            localStorage.setItem('bookList',JSON.stringify(bookList))
+            clearData();
+        
+            display();
+        
+            BookmarkNameInput.classList.remove("is-valid");
+            siteURLInput.classList.remove("is-valid");
+        
+        
+        
     }else{
-    dialogBox.showModal();
+        dialogBox.showModal();
     }
+
+    
 
 }
 
@@ -114,4 +119,14 @@ function bookURLValid(){
 
 function dialogClose(){
     dialogBox.close();
+}
+
+function noRepeat(){
+
+    for(var i=0;i<bookList.length;i++){
+        if(bookList[i].bookName.toLowerCase() == BookmarkNameInput.value.toLowerCase()){
+            return false
+        }   
+    }
+    return true
 }
